@@ -1,7 +1,10 @@
+import { motion } from 'framer-motion'
+
 function Header({ activeTab, setActiveTab }) {
     const tabs = [
         { id: 'chess', icon: '♛', label: 'Chess' },
         { id: 'oracle', icon: '✧', label: 'Oracle' },
+        { id: 'archive', icon: '📜', label: 'Archive' },
         { id: 'books', icon: '📚', label: 'Books' },
         { id: 'movies', icon: '🎬', label: 'Movies' },
     ]
@@ -17,16 +20,22 @@ function Header({ activeTab, setActiveTab }) {
             </p>
 
             {/* Tab Navigation */}
-            <nav className="flex justify-center gap-2 sm:gap-3 flex-wrap max-w-xl mx-auto">
+            <nav className="flex justify-center gap-2 sm:gap-3 flex-wrap max-w-2xl mx-auto">
                 {tabs.map(tab => (
-                    <button
+                    <motion.button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={`tab-button text-xs sm:text-sm ${activeTab === tab.id ? 'active' : ''}`}
+                        whileHover={{
+                            scale: 1.05,
+                            boxShadow: '0 0 20px rgba(183, 110, 121, 0.6), 0 0 30px rgba(183, 110, 121, 0.4)'
+                        }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                     >
                         <span className="mr-1">{tab.icon}</span>
                         <span className="hidden sm:inline">{tab.label}</span>
-                    </button>
+                    </motion.button>
                 ))}
             </nav>
         </header>

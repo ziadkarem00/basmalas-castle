@@ -2,13 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base Styles */
+/* Base Styles - Digital Sanctuary Color Palette */
 :root {
-  --obsidian: #0F0F0F;
-  --midnight-purple: #2E0249;
-  --dark-cherry: #A91D3A;
-  --rose-gold: #F1B4BB;
-  --moonlight: #E5E5E5;
+  --obsidian: #0a0a0a;
+  --burgundy: #4a0404;
+  --dark-cherry: #8b1a1a;
+  --rose-gold: #b76e79;
+  --moonlight: #e2e2e2;
+  --midnight-purple: #1a0a1a;
 }
 
 * {
@@ -20,14 +21,13 @@
 body {
   font-family: 'Crimson Text', serif;
   background:
-    linear-gradient(135deg, rgba(15, 15, 15, 0.7) 0%, rgba(46, 2, 73, 0.6) 100%),
+    linear-gradient(135deg, rgba(10, 10, 10, 0.85) 0%, rgba(74, 4, 4, 0.7) 100%),
     url('/background.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   min-height: 100vh;
   min-height: 100dvh;
-  /* Dynamic viewport height for mobile */
   color: var(--moonlight);
   overflow-x: hidden;
 }
@@ -37,6 +37,47 @@ body {
   body {
     background-attachment: scroll;
   }
+}
+
+/* Custom Scrollbar - 6px Dark Burgundy */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--burgundy);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-cherry);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--burgundy) transparent;
+}
+
+/* Glow Pulse Animation */
+@keyframes glowPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(183, 110, 121, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(183, 110, 121, 0.6), 0 0 30px rgba(183, 110, 121, 0.4);
+  }
+}
+
+.glow-pulse {
+  animation: glowPulse 2s ease-in-out infinite;
 }
 
 /* Floating Dust Particles */
@@ -52,7 +93,7 @@ body {
   position: absolute;
   width: 4px;
   height: 4px;
-  background: radial-gradient(circle, rgba(241, 180, 187, 0.8) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(183, 110, 121, 0.8) 0%, transparent 70%);
   border-radius: 50%;
   animation: dust 20s linear infinite;
 }
@@ -79,20 +120,20 @@ body {
 
 /* Glassmorphism Panel */
 .glass-panel {
-  background: rgba(15, 15, 15, 0.6);
+  background: rgba(10, 10, 10, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(241, 180, 187, 0.2);
+  border: 1px solid rgba(183, 110, 121, 0.2);
   border-radius: 16px;
 }
 
 /* Gothic Title Glow */
 .gothic-glow {
   text-shadow:
-    0 0 10px rgba(241, 180, 187, 0.8),
-    0 0 20px rgba(241, 180, 187, 0.6),
-    0 0 30px rgba(241, 180, 187, 0.4),
-    0 0 40px rgba(241, 180, 187, 0.2);
+    0 0 10px rgba(183, 110, 121, 0.8),
+    0 0 20px rgba(183, 110, 121, 0.6),
+    0 0 30px rgba(183, 110, 121, 0.4),
+    0 0 40px rgba(183, 110, 121, 0.2);
 }
 
 /* Tab Button Styles */
@@ -100,7 +141,7 @@ body {
   position: relative;
   padding: 12px 24px;
   background: transparent;
-  border: 1px solid rgba(241, 180, 187, 0.3);
+  border: 1px solid rgba(183, 110, 121, 0.3);
   color: var(--moonlight);
   font-family: 'Crimson Text', serif;
   font-size: 1rem;
@@ -113,7 +154,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, var(--dark-cherry), var(--midnight-purple));
+  background: linear-gradient(135deg, var(--dark-cherry), var(--burgundy));
   opacity: 0;
   transition: opacity 0.3s ease;
   z-index: -1;
@@ -126,13 +167,13 @@ body {
 
 .tab-button.active {
   border-color: var(--rose-gold);
-  box-shadow: 0 0 15px rgba(241, 180, 187, 0.3);
+  box-shadow: 0 0 15px rgba(183, 110, 121, 0.3);
 }
 
 /* Wrought Iron Button */
 .iron-button {
-  background: linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 50%, #2a2a2a 100%);
-  border: 2px solid #4a4a4a;
+  background: linear-gradient(180deg, #3a2020 0%, #1a0a0a 50%, #2a1515 100%);
+  border: 2px solid #4a2020;
   border-radius: 4px;
   padding: 12px 28px;
   color: var(--moonlight);
@@ -154,7 +195,7 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
     inset 0 -1px 0 rgba(0, 0, 0, 0.3),
     0 6px 12px rgba(0, 0, 0, 0.5),
-    0 0 20px rgba(169, 29, 58, 0.3);
+    0 0 20px rgba(183, 110, 121, 0.3);
 }
 
 .iron-button:active {
@@ -167,8 +208,8 @@ body {
 
 /* Small Iron Button */
 .iron-button-small {
-  background: linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 50%, #2a2a2a 100%);
-  border: 1px solid #4a4a4a;
+  background: linear-gradient(180deg, #3a2020 0%, #1a0a0a 50%, #2a1515 100%);
+  border: 1px solid #4a2020;
   border-radius: 4px;
   padding: 8px 14px;
   color: var(--moonlight);
@@ -183,11 +224,11 @@ body {
 }
 
 .iron-button-small:hover {
-  background: linear-gradient(180deg, #4a4a4a 0%, #2a2a2a 50%, #3a3a3a 100%);
+  background: linear-gradient(180deg, #4a2525 0%, #2a1010 50%, #3a2020 100%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
     0 4px 8px rgba(0, 0, 0, 0.4),
-    0 0 10px rgba(169, 29, 58, 0.2);
+    0 0 10px rgba(183, 110, 121, 0.2);
 }
 
 .iron-button-small:active {
@@ -201,24 +242,24 @@ body {
 
 .iron-button-small.active {
   border-color: var(--rose-gold);
-  box-shadow: 0 0 10px rgba(241, 180, 187, 0.3);
+  box-shadow: 0 0 10px rgba(183, 110, 121, 0.3);
 }
 
 /* Chess Board Squares */
 .square-light {
-  background: linear-gradient(135deg, #E0C097 0%, #d4b08c 100%);
+  background: linear-gradient(135deg, #d4b08c 0%, #c9a077 100%);
 }
 
 .square-dark {
-  background: linear-gradient(135deg, #2D033B 0%, #3d0a4f 100%);
+  background: linear-gradient(135deg, #4a0404 0%, #5a1010 100%);
 }
 
 .square-highlight {
-  box-shadow: inset 0 0 0 3px rgba(241, 180, 187, 0.8);
+  box-shadow: inset 0 0 0 3px rgba(183, 110, 121, 0.8);
 }
 
 .square-last-move {
-  background: linear-gradient(135deg, rgba(169, 29, 58, 0.4), rgba(169, 29, 58, 0.3)) !important;
+  background: linear-gradient(135deg, rgba(183, 110, 121, 0.4), rgba(183, 110, 121, 0.3)) !important;
 }
 
 .square-possible {
@@ -229,44 +270,100 @@ body {
   content: '';
   position: absolute;
   inset: 35%;
-  background: rgba(169, 29, 58, 0.6);
+  background: rgba(183, 110, 121, 0.6);
   border-radius: 50%;
 }
 
 /* Crystal Ball */
 .crystal-ball {
   cursor: pointer;
-  filter: drop-shadow(0 0 20px rgba(241, 180, 187, 0.4));
+  filter: drop-shadow(0 0 20px rgba(183, 110, 121, 0.4));
   transition: filter 0.3s ease;
 }
 
 .crystal-ball:hover {
-  filter: drop-shadow(0 0 40px rgba(241, 180, 187, 0.7));
+  filter: drop-shadow(0 0 40px rgba(183, 110, 121, 0.7));
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* Grimoire/Journal Styles */
+.grimoire {
+  background: linear-gradient(180deg, #1a0a0a 0%, #0a0505 100%);
+  border: 2px solid #3a1515;
+  font-family: 'Crimson Text', serif;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--obsidian);
+.grimoire textarea {
+  background: transparent;
+  border: none;
+  color: var(--moonlight);
+  font-family: 'Crimson Text', serif;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  resize: none;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--dark-cherry);
-  border-radius: 4px;
+.grimoire textarea::placeholder {
+  color: rgba(183, 110, 121, 0.5);
+  font-style: italic;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--rose-gold);
+.grimoire textarea:focus {
+  outline: none;
+}
+
+/* Ink Bleed Typography */
+.ink-bleed {
+  text-shadow:
+    0 0 1px var(--moonlight),
+    0 0 2px rgba(183, 110, 121, 0.3);
+}
+
+/* Ambient Sound Button */
+.ambient-btn {
+  background: rgba(10, 10, 10, 0.6);
+  border: 1px solid rgba(183, 110, 121, 0.3);
+  border-radius: 12px;
+  padding: 16px 24px;
+  color: var(--moonlight);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ambient-btn:hover {
+  background: rgba(74, 4, 4, 0.4);
+  border-color: var(--rose-gold);
+}
+
+.ambient-btn.active {
+  background: linear-gradient(135deg, rgba(139, 26, 26, 0.5), rgba(74, 4, 4, 0.5));
+  border-color: var(--rose-gold);
+  box-shadow: 0 0 15px rgba(183, 110, 121, 0.3);
+}
+
+/* Move List Panel */
+.move-list {
+  background: rgba(10, 10, 10, 0.8);
+  border: 1px solid rgba(183, 110, 121, 0.2);
+  border-radius: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.move-list-item {
+  padding: 4px 8px;
+  border-bottom: 1px solid rgba(183, 110, 121, 0.1);
+  font-family: 'Crimson Text', serif;
+}
+
+.move-list-item:last-child {
+  border-bottom: none;
 }
 
 /* Mobile-specific improvements */
 @media (max-width: 640px) {
   .tab-button {
-    padding: 10px 16px;
-    font-size: 0.875rem;
+    padding: 10px 12px;
+    font-size: 0.8rem;
   }
 
   .iron-button {
@@ -277,6 +374,10 @@ body {
 
   .glass-panel {
     border-radius: 12px;
+  }
+
+  .move-list {
+    max-height: 200px;
   }
 }
 
@@ -300,5 +401,9 @@ body {
 
   .tab-button {
     min-height: 44px;
+  }
+
+  .ambient-btn {
+    min-height: 60px;
   }
 }

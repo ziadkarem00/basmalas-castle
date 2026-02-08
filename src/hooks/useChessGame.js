@@ -2,6 +2,8 @@ import { useState, useCallback, useEffect } from 'react'
 import { Chess } from 'chess.js'
 import { soundManager } from './useSound'
 
+const CHESS_STORAGE_KEY = 'basmalas-castle-chess'
+
 export function useChessGame() {
     const [game, setGame] = useState(null) // null = not started
     const [selectedSquare, setSelectedSquare] = useState(null)
@@ -9,7 +11,7 @@ export function useChessGame() {
     const [gameStatus, setGameStatus] = useState('Press Start to begin your match.')
     const [isThinking, setIsThinking] = useState(false)
     const [moveHistory, setMoveHistory] = useState([])
-    const [showHistory, setShowHistory] = useState(false)
+    const [showHistory, setShowHistory] = useState(true) // Always show by default
     const [lastMove, setLastMove] = useState(null)
     const [showLastMove, setShowLastMove] = useState(false)
 
@@ -21,6 +23,38 @@ export function useChessGame() {
         }
         document.addEventListener('click', initSound)
         return () => document.removeEventListener('click', initSound)
+    }, [])
+
+    // Load saved game on mount
+    useEffect(() => {
+        const saved = localStorage.getItem(CHESS_STORAGE_KEY)
+        if (saved) {
+            try {
+                const data = JSON.parse(saved)
+                if (data.fen) {
+                    const loadedGame = new Chess(data.fen)
+                    setGame(loadedGame)
+                    setMoveHistory(data.moveHistory || [])
+                    setLastMove(data.lastMove || null)
+                    updateStatus(loadedGame)
+                }
+            } catch (e) {
+                console.log('Could not restore chess game')
+            }
+        }
+    }, [])
+
+    // Save game to localStorage after each move
+    const saveGame = useCallback((chessGame, history, lastMoveData) => {
+        if (chessGame) {
+            const data = {
+                fen: chessGame.fen(),
+                moveHistory: history,
+                lastMove: lastMoveData,
+                timestamp: new Date().toISOString()
+            }
+            localStorage.setItem(CHESS_STORAGE_KEY, JSON.stringify(data))
+        }
     }, [])
 
     // Update game status
@@ -86,17 +120,21 @@ export function useChessGame() {
             // Play sound
             soundManager.playMove()
 
-            setGame(newGame)
-            setLastMove({ from: madeMove.from, to: madeMove.to })
-            setMoveHistory(prev => [...prev, {
+            const newHistory = [...moveHistory, {
                 move: madeMove.san,
                 color: 'b',
                 fen: newGame.fen()
-            }])
+            }]
+            const newLastMove = { from: madeMove.from, to: madeMove.to }
+
+            setGame(newGame)
+            setLastMove(newLastMove)
+            setMoveHistory(newHistory)
+            saveGame(newGame, newHistory, newLastMove)
             updateStatus(newGame)
             setIsThinking(false)
         }, 800)
-    }, [updateStatus])
+    }, [updateStatus, moveHistory, saveGame])
 
     // Handle square click
     const handleSquareClick = useCallback((square) => {
@@ -119,15 +157,19 @@ export function useChessGame() {
                 // Play sound
                 soundManager.playMove()
 
-                setGame(newGame)
-                setSelectedSquare(null)
-                setPossibleMoves([])
-                setLastMove({ from: madeMove.from, to: madeMove.to })
-                setMoveHistory(prev => [...prev, {
+                const newLastMove = { from: madeMove.from, to: madeMove.to }
+                const newHistory = [...moveHistory, {
                     move: madeMove.san,
                     color: 'w',
                     fen: newGame.fen()
-                }])
+                }]
+
+                setGame(newGame)
+                setSelectedSquare(null)
+                setPossibleMoves([])
+                setLastMove(newLastMove)
+                setMoveHistory(newHistory)
+                saveGame(newGame, newHistory, newLastMove)
                 updateStatus(newGame)
 
                 if (!newGame.isGameOver()) {
@@ -153,7 +195,7 @@ export function useChessGame() {
             const moves = game.moves({ square, verbose: true })
             setPossibleMoves(moves.map(m => m.to))
         }
-    }, [game, selectedSquare, isThinking, makeAIMove, updateStatus])
+    }, [game, selectedSquare, isThinking, makeAIMove, updateStatus, moveHistory, saveGame])
 
     // Start a new game
     const startGame = useCallback(() => {
@@ -167,6 +209,8 @@ export function useChessGame() {
         setGameStatus('Your move, Queen.')
         setIsThinking(false)
         soundManager.init()
+        // Clear saved game when starting fresh
+        localStorage.removeItem(CHESS_STORAGE_KEY)
     }, [])
 
     // Reset game
@@ -179,7 +223,31 @@ export function useChessGame() {
         setShowLastMove(false)
         setGameStatus('Press Start to begin your match.')
         setIsThinking(false)
+        // Clear saved game
+        localStorage.removeItem(CHESS_STORAGE_KEY)
     }, [])
+
+    // Undo last move (player's move + AI response)
+    const undoLastMove = useCallback(() => {
+        if (!game || moveHistory.length < 2 || isThinking) return
+
+        const newGame = new Chess(game.fen())
+        newGame.undo() // Undo AI move
+        newGame.undo() // Undo player move
+
+        const newHistory = moveHistory.slice(0, -2)
+        const newLastMove = newHistory.length >= 1
+            ? { from: null, to: null } // Could restore from history if needed
+            : null
+
+        setGame(newGame)
+        setMoveHistory(newHistory)
+        setLastMove(newLastMove)
+        setSelectedSquare(null)
+        setPossibleMoves([])
+        saveGame(newGame, newHistory, newLastMove)
+        updateStatus(newGame)
+    }, [game, moveHistory, isThinking, saveGame, updateStatus])
 
     // Toggle history panel
     const toggleHistory = useCallback(() => {
@@ -212,6 +280,7 @@ export function useChessGame() {
         handleSquareClick,
         startGame,
         resetGame,
+        undoLastMove,
         toggleHistory,
         toggleShowLastMove,
     }

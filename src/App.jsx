@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Header from './components/Header'
 import ChessArena from './components/ChessArena'
 import Oracle from './components/Oracle'
+import Archive from './components/Archive'
 import BookSuggestion from './components/BookSuggestion'
 import MovieSuggestion from './components/MovieSuggestion'
 import DustParticles from './components/DustParticles'
@@ -16,6 +17,8 @@ function App() {
                 return <ChessArena />
             case 'oracle':
                 return <Oracle />
+            case 'archive':
+                return <Archive />
             case 'books':
                 return <BookSuggestion />
             case 'movies':

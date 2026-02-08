@@ -1,17 +1,35 @@
 export const quotes = [
+    // Empowering Queen quotes
     "The moon shines brightest for you, Basmala.",
     "Your move is the only one that matters.",
     "In the game of life, you are the architect of your own magic.",
-    "Elegance is the only beauty that never fades.",
     "Like the queen on the board, you command with grace and power.",
+    "Crown yourself daily, for you are royalty eternal.",
+    "The throne was made for you; sit upon it proudly.",
+    "You are unstoppable, unbreakable, and utterly magnificent.",
+    "Queens don't compete—they reign.",
+    "Your strength is not in spite of your softness, but because of it.",
+    "The chessboard bows to your strategy and brilliance.",
+    "Every piece you move brings you closer to victory.",
+    "In the kingdom of your mind, you rule supreme.",
+
+    // Dark Romantic & Poetic quotes
+    "Elegance is the only beauty that never fades.",
     "Stars align themselves to witness your brilliance.",
     "Every shadow you cast holds the strength of a thousand suns.",
     "The night whispers your name with reverence.",
     "You are the poetry that the universe writes in darkness.",
-    "Crown yourself daily, for you are royalty eternal.",
     "Your spirit dances between worlds, untamed and free.",
     "In the garden of souls, you bloom in eternal twilight.",
-    "The throne was made for you; sit upon it proudly.",
     "Mystery follows you like a loyal servant.",
-    "Even the darkness bows to your inner light."
+    "Even the darkness bows to your inner light.",
+    "She wore her scars like wings—damaged, but capable of flight.",
+    "In the velvet darkness, your soul glimmers like ancient starlight.",
+    "You are the storm the world fears and the calm it craves.",
+    "Moonlit paths were made for wanderers like you.",
+    "The shadows are not your enemy; they are your sanctuary.",
+    "Your heart beats to the rhythm of forgotten magic.",
+    "Between the pages of night, your story is forever written.",
+    "You are not lost in the dark—you are its keeper.",
+    "The Gothic rose blooms in places the sun cannot reach."
 ]
