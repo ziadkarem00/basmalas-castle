@@ -6,6 +6,7 @@ import Oracle from './components/Oracle'
 import Archive from './components/Archive'
 import BookSuggestion from './components/BookSuggestion'
 import MovieSuggestion from './components/MovieSuggestion'
+import DrinkRecipes from './components/DrinkRecipes'
 import DustParticles from './components/DustParticles'
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
                 return <BookSuggestion />
             case 'movies':
                 return <MovieSuggestion />
+            case 'drinks':
+                return <DrinkRecipes />
             default:
                 return <ChessArena />
         }

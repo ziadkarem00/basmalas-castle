@@ -7,6 +7,7 @@ function Header({ activeTab, setActiveTab }) {
         { id: 'archive', icon: '📜', label: 'Archive' },
         { id: 'books', icon: '📚', label: 'Books' },
         { id: 'movies', icon: '🎬', label: 'Movies' },
+        { id: 'drinks', icon: '☕', label: 'Drinks' },
     ]
 
     return (
