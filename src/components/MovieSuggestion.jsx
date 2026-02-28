@@ -7,23 +7,36 @@ function MovieSuggestion() {
     const [revealed, setRevealed] = useState(false)
     const [currentMovie, setCurrentMovie] = useState(null)
     const [isAnimating, setIsAnimating] = useState(false)
+    const [shownIndices, setShownIndices] = useState([])
+    const allShown = shownIndices.length >= movies.length
 
     const revealMovie = useCallback(() => {
-        if (isAnimating) return
+        if (isAnimating || allShown) return
 
         soundManager.init()
         setIsAnimating(true)
         setRevealed(false)
 
-        const randomMovie = movies[Math.floor(Math.random() * movies.length)]
+        // Pick a random movie from the ones not yet shown
+        const remaining = movies
+            .map((m, i) => i)
+            .filter(i => !shownIndices.includes(i))
+        const pick = remaining[Math.floor(Math.random() * remaining.length)]
 
         setTimeout(() => {
             soundManager.playOracle()
-            setCurrentMovie(randomMovie)
+            setCurrentMovie(movies[pick])
+            setShownIndices(prev => [...prev, pick])
             setRevealed(true)
             setIsAnimating(false)
         }, 600)
-    }, [isAnimating])
+    }, [isAnimating, shownIndices, allShown])
+
+    const resetMovies = useCallback(() => {
+        setShownIndices([])
+        setCurrentMovie(null)
+        setRevealed(false)
+    }, [])
 
     return (
         <div className="glass-panel p-6 sm:p-8 md:p-12 text-center">
@@ -38,9 +51,9 @@ function MovieSuggestion() {
             <div className="flex justify-center mb-6 sm:mb-8">
                 <motion.div
                     onClick={revealMovie}
-                    className="cursor-pointer"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    className={`${allShown ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}`}
+                    whileHover={allShown ? {} : { scale: 1.05 }}
+                    whileTap={allShown ? {} : { scale: 0.95 }}
                     animate={isAnimating ? {
                         rotate: [0, 360],
                     } : {}}
@@ -95,9 +108,30 @@ function MovieSuggestion() {
                 </motion.div>
             </div>
 
-            <p className="text-moonlight/60 text-xs sm:text-sm mb-4 sm:mb-6 font-elegant">
-                {isAnimating ? "The reel is spinning..." : "Tap the reel to receive a suggestion"}
+            <p className="text-moonlight/60 text-xs sm:text-sm mb-2 font-elegant">
+                {isAnimating
+                    ? "The reel is spinning..."
+                    : allShown
+                        ? "You've seen all the suggestions!"
+                        : "Tap the reel to receive a suggestion"}
             </p>
+
+            {/* Progress */}
+            <p className="text-moonlight/40 text-xs mb-4 sm:mb-6">
+                {shownIndices.length} / {movies.length} revealed
+            </p>
+
+            {/* Reset Button */}
+            {allShown && (
+                <motion.button
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    onClick={resetMovies}
+                    className="iron-button-small mb-6"
+                >
+                    ↻ Start Over
+                </motion.button>
+            )}
 
             {/* Movie Display */}
             <AnimatePresence mode="wait">
@@ -139,3 +173,4 @@ function MovieSuggestion() {
 }
 
 export default MovieSuggestion
+
