@@ -81,6 +81,11 @@ function DrinkRecipes() {
                                 <h3 className="text-2xl sm:text-3xl text-rose-gold font-gothic">
                                     {selectedRecipe.name}
                                 </h3>
+                                {selectedRecipe.description && (
+                                    <p className="text-moonlight/60 italic mt-2 text-sm">
+                                        {selectedRecipe.description}
+                                    </p>
+                                )}
                             </div>
 
                             {/* Ingredients */}
