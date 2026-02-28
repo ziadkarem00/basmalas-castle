@@ -60,10 +60,10 @@ export const movies = [
         brief: "An inspiring English teacher encourages his students to seize the day and think for themselves. Robin Williams at his finest."
     },
     {
-        title: "Hamlet",
-        year: 1996,
-        genre: "Drama / Tragedy",
-        brief: "Shakespeare's prince of Denmark wrestles with revenge, madness, and mortality. The ultimate tale of existential conflict."
+        title: "Hamnet",
+        year: 2026,
+        genre: "Historical Drama",
+        brief: "Based on Maggie O'Farrell's novel, it tells the story of Shakespeare's son and the family behind the genius. Heartbreaking and exquisitely crafted."
     },
     {
         title: "Arrival",
