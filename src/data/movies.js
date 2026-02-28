@@ -46,5 +46,29 @@ export const movies = [
         year: 2012,
         genre: "Coming-of-Age Drama",
         brief: "An introverted freshman navigates high school with the help of two free-spirited seniors. Tender, emotional, and beautifully real."
+    },
+    {
+        title: "12 Angry Men",
+        year: 1957,
+        genre: "Courtroom Drama",
+        brief: "Twelve jurors deliberate the fate of a young man accused of murder. A gripping masterpiece of tension, reason, and moral courage."
+    },
+    {
+        title: "Dead Poets Society",
+        year: 1989,
+        genre: "Drama",
+        brief: "An inspiring English teacher encourages his students to seize the day and think for themselves. Robin Williams at his finest."
+    },
+    {
+        title: "Hamlet",
+        year: 1996,
+        genre: "Drama / Tragedy",
+        brief: "Shakespeare's prince of Denmark wrestles with revenge, madness, and mortality. The ultimate tale of existential conflict."
+    },
+    {
+        title: "Arrival",
+        year: 2016,
+        genre: "Sci-Fi Drama",
+        brief: "A linguist must communicate with mysterious alien visitors before time runs out. A deeply moving meditation on language, love, and loss."
     }
 ]
